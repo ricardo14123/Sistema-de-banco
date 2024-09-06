@@ -1,6 +1,6 @@
 # 💲Sistema de Operações Bancárias em Python💲
 
-Este projeto é um sistema simples de operações bancárias implementado em Python. Ele permite ao usuário realizar depósitos, saques e consultar um extrato com informações sobre as transações realizadas, incluindo data e hora.
+#### Este projeto é um sistema simples de operações bancárias implementado em Python. Ele permite ao usuário realizar depósitos, saques e consultar um extrato com informações sobre as transações realizadas, incluindo data e hora.
 
 ## Funcionalidades
 #### Depositar: Permite adicionar um valor ao saldo da conta e registra o depósito no extrato com data e hora.
