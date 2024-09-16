@@ -1,54 +1,144 @@
-# 💲Sistema Bancário Simples em Python💲
+# Sistema Bancário Simples
 
-
-Este é um sistema bancário simples desenvolvido em Python, que simula as operações básicas de um banco. O sistema permite a criação de usuários, a criação de contas correntes, a realização de depósitos e saques, e a visualização de extratos. O código utiliza um dicionário para armazenar as informações dos usuários e suas contas correntes, e um sistema básico de autenticação para garantir a segurança das transações.
+Este é um sistema bancário simples em Python que permite criar usuários, contas correntes, realizar depósitos, saques e listar contas, além de exibir extratos. O sistema demonstra conceitos básicos de programação orientada a objetos e abstração em Python.
 
 ## Funcionalidades
 
-- **Criar Usuário**: Permite criar um novo usuário fornecendo um CPF e uma senha.
-- **Criar Conta Corrente**: Permite criar uma conta corrente associada a um usuário existente, solicitando informações adicionais como nome completo, data de nascimento e endereço.
-- **Adicionar Saldo**: Adiciona saldo à conta corrente de um usuário, sem solicitar senha.
-- **Realizar Depósito**: Permite ao usuário realizar depósitos na conta corrente. Não é necessário fornecer senha para depósitos.
-- **Realizar Saque**: Permite ao usuário realizar saques da conta corrente, com verificações de saldo e limites diários. A senha é solicitada para confirmar a transação.
-- **Listar Contas Correntes**: Exibe informações sobre todas as contas correntes cadastradas, incluindo saldo, número de saques e dados pessoais.
-- **Exibir Extrato**: Exibe o extrato da conta corrente de um usuário, com detalhes das movimentações realizadas.
+- **Criar Usuário:** Permite criar um novo usuário com CPF, nome, data de nascimento e endereço.
+- **Criar Conta Corrente:** Cria uma nova conta corrente para um usuário existente.
+- **Adicionar Saldo:** Permite adicionar um valor a uma conta corrente.
+- **Sacar Dinheiro:** Permite retirar um valor da conta corrente, se a senha e o saldo permitirem.
+- **Listar Contas:** Exibe uma lista de todas as contas correntes criadas.
+- **Exibir Extrato:** Mostra o extrato de uma conta corrente, incluindo transações realizadas.
 
-## Funcionalidades Adicionais
+## Requisitos
 
-- **Resetar Transações Diárias**: Reseta o número de saques diários permitidos quando um novo dia começa.
-- **Autenticação de Senha**: Verifica a senha fornecida pelo usuário antes de realizar operações sensíveis, como saques e visualização de extratos de outros usuários.
+- Python 3.x
+
+## Instalação
+
+1. Clone este repositório ou baixe o arquivo Python.
+2. Certifique-se de ter o Python 3.x instalado em seu sistema.
+3. Execute o script com o comando:
+
+    ```bash
+    python nome_do_arquivo.py
+    ```
+
+## Como Usar
+
+1. Ao iniciar o script, um menu será exibido com as seguintes opções:
+   - **Criar Usuário**
+   - **Criar Conta Corrente**
+   - **Adicionar Saldo**
+   - **Sacar Dinheiro**
+   - **Listar Contas**
+   - **Exibir Extrato**
+   - **Sair**
+
+2. Escolha uma opção digitando o número correspondente e siga as instruções fornecidas pelo menu.
 
 ## Estrutura do Código
 
-- **Constantes**: Define limites de saque diário e valores máximos de saque.
-- **Variáveis Globais**: Armazena dados sobre usuários e contas correntes.
-- **Funções**:
-  - `resetar_transacoes_diarias()`: Reseta a quantidade de saques diários.
-  - `criar_usuario()`: Cria um novo usuário.
-  - `criar_conta_corrente()`: Cria uma nova conta corrente para um usuário existente.
-  - `adicionar_saldo()`: Adiciona saldo à conta corrente.
-  - `depositar()`: Realiza depósitos na conta corrente.
-  - `sacar()`: Realiza saques da conta corrente após autenticação.
-  - `exibir_extrato()`: Exibe o extrato da conta corrente.
-  - `exibir_extrato_usuario()`: Exibe o extrato de outro usuário após autenticação.
-  - `listar_contas()`: Lista todas as contas correntes cadastradas.
-  - `exibir_menu()`: Exibe o menu principal e captura a escolha do usuário.
-  - `sistema_bancario()`: Função principal que gerencia o sistema bancário.
+### Classes
 
-## Instruções para Execução
+- **Cliente**
+  - **Atributos:**
+    - `endereco`: Endereço do cliente.
+    - `contas`: Lista de contas do cliente.
+  - **Métodos:**
+    - `adicionar_conta(conta)`: Adiciona uma conta à lista de contas do cliente.
 
-1. Clone o repositório para sua máquina local.
-2. Execute o script Python usando o comando `python nome_do_arquivo.py`.
-3. Siga as instruções no menu para realizar as operações bancárias.
+- **PessoaFisica (herda de Cliente)**
+  - **Atributos:**
+    - `nome`: Nome do cliente.
+    - `data_nascimento`: Data de nascimento do cliente.
+    - `cpf`: CPF do cliente.
 
-## Dependências
+- **Historico**
+  - **Atributos:**
+    - `_transacoes`: Lista de transações.
+  - **Métodos:**
+    - `adicionar_transacao(transacao)`: Adiciona uma transação ao histórico.
 
-O sistema não requer bibliotecas externas além da biblioteca padrão do Python.
+- **Transacao (classe abstrata)**
+  - **Métodos Abstratos:**
+    - `valor`: Retorna o valor da transação.
+    - `registrar(conta, senha)`: Registra a transação na conta.
+
+- **Saque (herda de Transacao)**
+  - **Atributos:**
+    - `_valor`: Valor do saque.
+  - **Métodos:**
+    - `valor`: Retorna o valor do saque.
+    - `registrar(conta, senha)`: Registra o saque na conta.
+
+- **Deposito (herda de Transacao)**
+  - **Atributos:**
+    - `_valor`: Valor do depósito.
+  - **Métodos:**
+    - `valor`: Retorna o valor do depósito.
+    - `registrar(conta, senha=None)`: Registra o depósito na conta.
+
+- **Conta**
+  - **Atributos:**
+    - `_saldo`: Saldo da conta.
+    - `_numero`: Número da conta (gerado aleatoriamente).
+    - `_agencia`: Agência da conta.
+    - `_cliente`: Cliente da conta.
+    - `_historico`: Histórico de transações.
+    - `_senha`: Senha da conta.
+  - **Métodos:**
+    - `sacar(valor, senha)`: Realiza um saque da conta.
+    - `depositar(valor)`: Realiza um depósito na conta.
+
+- **ContaCorrente (herda de Conta)**
+  - **Atributos:**
+    - `limite`: Limite de saque da conta corrente.
+    - `limite_saques`: Limite de saques permitido.
+  - **Métodos:**
+    - `sacar(valor, senha)`: Realiza um saque, respeitando o limite e o número máximo de saques.
+    - `__str__()`: Retorna uma string formatada com as informações da conta corrente.
+
+- **Menu**
+  - **Atributos:**
+    - `clientes`: Dicionário de clientes (CPF como chave).
+    - `contas`: Dicionário de contas (número da conta como chave).
+  - **Métodos:**
+    - `exibir_menu()`: Exibe o menu principal.
+    - `criar_usuario()`: Cria um novo usuário.
+    - `criar_conta_corrente()`: Cria uma nova conta corrente.
+    - `adicionar_saldo()`: Adiciona saldo a uma conta.
+    - `sacar_dinheiro()`: Realiza um saque.
+    - `listar_contas()`: Lista todas as contas.
+    - `exibir_extrato()`: Exibe o extrato de uma conta.
+    - `iniciar()`: Inicia o menu e o loop de operação do sistema.
+
+## Exemplo de Uso
+
+1. **Criar um novo usuário**:
+   - Selecione a opção "Criar Usuário" e forneça as informações solicitadas.
+
+2. **Criar uma conta corrente**:
+   - Selecione a opção "Criar Conta Corrente" e forneça o CPF do cliente e a senha para a nova conta.
+
+3. **Adicionar saldo**:
+   - Selecione a opção "Adicionar Saldo" e informe o número da conta e o valor a ser depositado.
+
+4. **Sacar dinheiro**:
+   - Selecione a opção "Sacar Dinheiro" e informe o número da conta, o valor a ser sacado e a senha da conta.
+
+5. **Listar todas as contas**:
+   - Selecione a opção "Listar Contas" para visualizar todas as contas correntes.
+
+6. **Exibir extrato da conta**:
+   - Selecione a opção "Exibir Extrato" e forneça o número da conta e a senha para visualizar o extrato.
 
 ## Contribuições
 
-Contribuições são bem-vindas! Sinta-se à vontade para enviar pull requests ou abrir issues com sugestões e melhorias.
+Contribuições são bem-vindas! Por favor, faça um fork do repositório e envie um pull request com suas melhorias ou correções.
 
----
+
+
 ## Conecte-se comigo
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ricardo-ambrosio-7949772bb/) [![Instagram](https://img.shields.io/badge/-Instagram-%23E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/rii_ambrosio/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/ricardo14123) [![Gmail](https://img.shields.io/badge/Gmail-333333?style=for-the-badge&logo=gmail&logoColor=red)](mailto:ricardoambrosiodasilva1512@gmail.com)
